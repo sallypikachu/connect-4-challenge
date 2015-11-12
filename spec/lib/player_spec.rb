@@ -1,5 +1,27 @@
 require 'spec_helper'
 
 RSpec.describe Player do
-  
+  let(:player) {Player.new("X")}
+  describe ".new" do
+    it "should initialize Player" do
+      expect(player).to be_a(Player)
+    end
+  end
+  describe "#coin" do
+    it "should have a reader for coin" do
+      expect(player.coin).to eq("X")
+    end
+  end
+  describe "#name" do
+    it "should have a reader for name" do
+      expect(player.name).to eq("")
+    end
+  end
+  describe "#player_name" do
+    it "should have a writer for name" do
+      allow(player).to receive(:gets).and_return("Pikachu")
+      expect{player.player_name}.to output("What is the player's name?\n").to_stdout
+      expect(player.name).to eq("Pikachu")
+    end
+  end
 end

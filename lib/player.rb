@@ -1,13 +1,12 @@
 class Player
-  attr_reader :coin
-  attr_accessor :name
+  attr_reader :coin, :name
   def initialize (coin)
     @coin = coin
     @name = ""
   end
 
-
   def player_name
-    puts "what player"
+    puts "What is the player's name?"
+    @name = gets.chomp
   end
 end

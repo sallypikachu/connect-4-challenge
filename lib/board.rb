@@ -43,7 +43,6 @@ class Board
 
   def add_coin(player, position = nil)
     position = ask_for_position if position == nil
-    #board[9][1] = player.coin
     column = COLUMNS[position]
     board[last_row(9,column)][column] = player.coin
   end
@@ -56,10 +55,12 @@ class Board
   def last_row(row, column)
     board[row][column] == " " ? row : last_row(row-1, column)
   end
-end
 
-# board = Board.new
-# board.display_board
-# board.add_coin(board.player_1,'A')
-# board.display_board
-# board.add_coin(board.player_1)
+  def four_horizontal(player)
+    four_consecutive = false
+    board.each do |row|
+      four_consecutive = true if row.join("").include?(player.coin*4)
+    end
+    four_consecutive
+  end
+end
