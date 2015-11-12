@@ -23,7 +23,11 @@ class Board
     end
     puts @board[10].join(" ")
   end
+
+  def add_coin()
+
+  end
 end
 
-board = Board.new
-board.display_board
+# board = Board.new
+# board.display_board
