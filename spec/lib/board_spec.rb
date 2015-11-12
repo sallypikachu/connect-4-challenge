@@ -17,4 +17,11 @@ RSpec.describe Board do
       expect{board.display_board}.to output("|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n  A B C D E F G H I J  \n").to_stdout
     end
   end
+
+  describe "#add_coin" do
+    it "should add a coin to the specified column and the coin is representative of each of the two players" do
+      board.add_coin(board.player_1,'A')
+      expect{board.display_board}.to output("|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n| X                   |\n  A B C D E F G H I J  \n").to_stdout
+    end
+  end
 end

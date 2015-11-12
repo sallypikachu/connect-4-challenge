@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Game do
+RSpec.describe Game do
   let(:game) {Game.new}
   describe ".new" do
     it "should Game class" do
