@@ -14,7 +14,7 @@ RSpec.describe Board do
 
   describe "#display_board" do
     it "should display board when board is first initialized" do
-      expect{board.display_board}.to output("|                  |\n|                  |\n|                  |\n|                  |\n|                  |\n|                  |\n|                  |\n|                  |\n|                  |\n|                  |\nA B C D E F G H I J\n").to_stdout
+      expect{board.display_board}.to output("|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n  A B C D E F G H I J  \n").to_stdout
     end
   end
 end
