@@ -23,22 +23,23 @@ class Board
   end
 
   def build_board
-    board = Array.new(12) {Array(11)}
+    board = Array.new(11) {Array(12)}
     board.each do |row|
       row[0] = '|'
       row.fill(" ", 1..10)
       row[11] = '|'
     end
     x_coordinate = ('A'..'J').to_a
+    x_coordinate.unshift(" ")
+    x_coordinate << " "
     board[10] = x_coordinate
     board
   end
 
   def display_board
-    @board.each_with_index do |row, index|
-      puts "#{row.join(" ")}" if index < 10
+    @board.each_with_index do |row|
+      puts "#{row.join(" ")}"
     end
-    puts "  #{@board[10].join(" ")}  "
   end
 
   def add_coin(player, position = nil)
@@ -53,12 +54,29 @@ class Board
   end
 
   def last_row(row, column)
-    board[row][column] == " " ? row : last_row(row-1, column)
+    if board[row][column] == " "
+      row
+    else
+      if row >= 1
+        last_row(row-1, column)
+      else
+        puts "That column is already filled! Just for that, I'm going to skip your turn >=P"
+        0
+      end
+    end
   end
 
   def four_horizontal(player)
     four_consecutive = false
     board.each do |row|
+      four_consecutive = true if row.join("").include?(player.coin*4)
+    end
+    four_consecutive
+  end
+
+  def four_vertical(player)
+    four_consecutive = false
+    board.transpose.each do |row|
       four_consecutive = true if row.join("").include?(player.coin*4)
     end
     four_consecutive

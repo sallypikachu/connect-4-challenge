@@ -23,11 +23,14 @@ RSpec.describe Board do
       board.add_coin(board.player_1,'A')
       expect{board.display_board}.to output("|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n| X                   |\n  A B C D E F G H I J  \n").to_stdout
     end
-
     it "should add a coin to the specified column and the coin is representative of each of the two players" do
       board.add_coin(board.player_1,'A')
       board.add_coin(board.player_1,'J')
       expect{board.display_board}.to output("|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n| X                 X |\n  A B C D E F G H I J  \n").to_stdout
+    end
+    it "should not add to a filled column" do
+      11.times {board.add_coin(board.player_1,'A')}
+      expect{board.display_board}.to output("| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n  A B C D E F G H I J  \n").to_stdout
     end
   end
 
@@ -41,6 +44,19 @@ RSpec.describe Board do
       board.add_coin(board.player_1,'C')
       board.add_coin(board.player_1,'D')
       expect(board.four_horizontal(board.player_1)).to eq(true)
+    end
+  end
+
+  describe "#four_vertical" do
+    it "should check if there are four coins of the same type in a consecutive vertical line" do
+      expect(board.four_vertical(board.player_1)).to eq(false)
+    end
+    it "should check if there are four coins of the same type in a consecutive horizontal line" do
+      board.add_coin(board.player_1,'A')
+      board.add_coin(board.player_1,'A')
+      board.add_coin(board.player_1,'A')
+      board.add_coin(board.player_1,'A')
+      expect(board.four_vertical(board.player_1)).to eq(true)
     end
   end
 end
