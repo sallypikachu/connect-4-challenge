@@ -40,16 +40,29 @@ class Board
   end
 
   def add_coin(player, position = nil)
-    puts "#{player.name} --- Where would you like to put your coin #{player.coin}? (A-J)"
-    position = ask_for_position until COLUMNS.key?(position)
+    position = ask_for_position(player) until position_valid?(position) && column_has_space?(position)
     column = COLUMNS[position]
-    board[last_row(9,column)][column] = player.coin if board[0][column] == " "
-    puts "That column is already filled!" if board[0][column] != " "
+    board[last_row(9,column)][column] = player.coin
   end
 
-  def ask_for_position
+  def ask_for_position(player)
+    puts "#{player.name} --- Where would you like to put your coin #{player.coin}? (A-J)"
     position = gets.chomp.upcase
     position
+  end
+
+  def position_valid?(position)
+    COLUMNS.key?(position)
+  end
+
+  def column_has_space?(position)
+    column = COLUMNS[position]
+    if board[0][column] == " "
+      true
+    else
+      puts "That column is already filled!" if board[0][column] != " "
+      false
+    end
   end
 
   def last_row(row, column)
