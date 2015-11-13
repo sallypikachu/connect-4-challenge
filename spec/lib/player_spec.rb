@@ -17,11 +17,4 @@ RSpec.describe Player do
       expect(player.name).to eq("")
     end
   end
-  describe "#player_name" do
-    it "should have a writer for name" do
-      allow(player).to receive(:gets).and_return("Pikachu")
-      expect{player.player_name}.to output("What is the player's name?\n").to_stdout
-      expect(player.name).to eq("Pikachu")
-    end
-  end
 end

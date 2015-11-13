@@ -1,5 +1,4 @@
 require 'pry'
-require_relative 'player'
 
 class Board
   COLUMNS = {
@@ -14,12 +13,10 @@ class Board
     'I' => 9,
     'J' => 10,
   }
-  attr_reader :player_1
+
   attr_accessor :board
   def initialize
     @board = build_board
-    @player_1 = Player.new("X")
-    @player_2 = Player.new("O")
   end
 
   def build_board
@@ -43,33 +40,30 @@ class Board
   end
 
   def add_coin(player, position = nil)
-    position = ask_for_position if position == nil
+    puts "#{player.name} --- Where would you like to put your coin #{player.coin}? (A-J)"
+    position = ask_for_position until COLUMNS.key?(position)
     column = COLUMNS[position]
-    board[last_row(9,column)][column] = player.coin
+    board[last_row(9,column)][column] = player.coin if board[0][column] == " "
+    puts "That column is already filled!" if board[0][column] != " "
   end
 
   def ask_for_position
-    puts "Where would you like to put your coin? (A-J)"
     position = gets.chomp.upcase
+    position
   end
 
   def last_row(row, column)
     if board[row][column] == " "
       row
     else
-      if row >= 1
-        last_row(row-1, column)
-      else
-        puts "That column is already filled! Just for that, I'm going to skip your turn >=P"
-        0
-      end
+      last_row(row-1, column) if row >= 1
     end
   end
 
   def four_horizontal(player)
     four_consecutive = false
     board.each do |row|
-      four_consecutive = true if row.join("").include?(player.coin*4)
+      four_consecutive = true if row.join.include?(player.coin*4)
     end
     four_consecutive
   end
@@ -77,8 +71,12 @@ class Board
   def four_vertical(player)
     four_consecutive = false
     board.transpose.each do |row|
-      four_consecutive = true if row.join("").include?(player.coin*4)
+      four_consecutive = true if row.join.include?(player.coin*4)
     end
     four_consecutive
+  end
+
+  def full_board?
+    board[0].any?{|column| column == " "}
   end
 end
