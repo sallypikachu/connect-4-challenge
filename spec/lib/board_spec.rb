@@ -30,8 +30,10 @@ RSpec.describe Board do
       expect{board.display_board}.to output("|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n|                     |\n| X                 X |\n  A B C D E F G H I J  \n").to_stdout
     end
     it "should not add to a filled column" do
-      11.times {board.add_coin(player_1,'A')}
-      expect{board.display_board}.to output("| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n  A B C D E F G H I J  \n").to_stdout
+      10.times {board.add_coin(player_1,'A')}
+      allow(board).to receive(:gets).and_return("B")
+      board.add_coin(player_1,'A')
+      expect{board.display_board}.to output("| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X                   |\n| X X                 |\n  A B C D E F G H I J  \n").to_stdout
     end
   end
 
